@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitePath — Find the right calories</title>
+    <meta name="description" content="BitePath is a calorie-aware, location-aware meal planning app that helps you find the right meal at the right place, every day.">
+    <meta name="theme-color" content="#14532D">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green-deep: #14532D;
+            --green-mid: #166534;
+            --green-bright: #22C55E;
+            --green-light: #DCEEBE;
+            --teal: #3B7A7A;
+            --teal-light: #A7CDC9;
+            --bg-warm: #F5F5F0;
+            --bg-stone: #ECECE5;
+            --text-primary: #1B1B18;
+            --text-secondary: #4A4A42;
+            --white: #FFFFFF;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-warm);
+            overflow-x: hidden;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: var(--green-deep);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(34, 197, 94, 0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(59, 122, 122, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 32px;
+            object-fit: cover;
+            margin-bottom: 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h1 {
+            font-family: 'Caveat', cursive;
+            font-size: clamp(48px, 8vw, 80px);
+            color: var(--white);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            color: var(--green-bright);
+        }
+
+        .hero-tagline {
+            font-size: clamp(18px, 3vw, 24px);
+            color: var(--teal-light);
+            font-weight: 400;
+            margin-bottom: 48px;
+            max-width: 500px;
+            line-height: 1.5;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--green-bright);
+            color: var(--green-deep);
+        }
+
+        .btn-primary:hover {
+            background: #16A34A;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        /* ── Features ── */
+        .features {
+            padding: 100px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .features-header h2 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            color: var(--green-deep);
+            margin-bottom: 16px;
+        }
+
+        .features-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 120px;
+        }
+
+        .feature-row:nth-child(even) .feature-image {
+            order: -1;
+        }
+
+        .feature-text h3 {
+            font-family: 'Caveat', cursive;
+            font-size: 36px;
+            color: var(--green-deep);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .feature-text p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .feature-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .feature-image img {
+            max-height: 600px;
+            width: auto;
+            border-radius: 24px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.12);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-image img:hover {
+            transform: scale(1.02);
+        }
+
+        /* ── How It Works ── */
+        .how-it-works {
+            background: var(--green-deep);
+            padding: 100px 24px;
+            text-align: center;
+        }
+
+        .how-it-works h2 {
+            font-size: clamp(32px, 5vw, 48px);
+            color: var(--white);
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step {
+            padding: 32px 24px;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--green-bright);
+            color: var(--green-deep);
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            color: var(--white);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            color: var(--teal-light);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ── CTA ── */
+        .cta {
+            padding: 100px 24px;
+            text-align: center;
+            background: var(--bg-warm);
+        }
+
+        .cta h2 {
+            font-family: 'Caveat', cursive;
+            font-size: clamp(36px, 6vw, 56px);
+            color: var(--green-deep);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .cta p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .store-badges {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .store-badge {
+            height: 52px;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .store-badge:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ── Footer ── */
+        footer {
+            background: var(--green-deep);
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--teal-light);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-copy {
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .feature-row {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                margin-bottom: 80px;
+            }
+
+            .feature-row:nth-child(even) .feature-image {
+                order: 0;
+            }
+
+            .feature-image img {
+                max-height: 480px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .hero-logo {
+                width: 100px;
+                height: 100px;
+                border-radius: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+    <img src="images/logo.jpg" alt="BitePath logo" class="hero-logo">
+    <h1>Find the right <span>calories.</span></h1>
+    <p class="hero-tagline">Meal planning that knows where you are. Plan breakfast, lunch, and dinner around your location, calorie goals, and budget.</p>
+    <div class="hero-cta">
+        <a href="https://apps.apple.com/app/bitepath/id6761927959" class="btn btn-primary">
+            <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            App Store
+        </a>
+        <a href="#features" class="btn btn-secondary">Learn More</a>
+    </div>
+    <div class="scroll-hint">Scroll to explore</div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+    <div class="features-header">
+        <h2>Your calories have a geography</h2>
+        <p>BitePath connects what you eat to where you are — surfacing the right meal at the right place throughout your day.</p>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3>Plan your meals in the morning</h3>
+            <p>Set your daily calorie goal, food budget, and locations. Tell the app where you'll be — home, work, or on the go — and BitePath builds your day around it. One tap to start planning.</p>
+        </div>
+        <div class="feature-image">
+            <img src="images/setup.jpg" alt="BitePath setup screen showing calorie and budget sliders">
+        </div>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3>Find what fits nearby</h3>
+            <p>See restaurants near your current location, sorted by distance, price, and how many menu items fit your remaining calories and budget. Every option is filtered to what actually works for you right now.</p>
+        </div>
+        <div class="feature-image">
+            <img src="images/pickrestaurant.jpg" alt="BitePath restaurant selection screen with food photos">
+        </div>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3>Pick the right bite</h3>
+            <p>Every menu item shows full nutrition details — calories, protein, fat, carbs, and price. No guessing. Pick what fits your goals and your wallet, with confidence.</p>
+        </div>
+        <div class="feature-image">
+            <img src="images/pickitem.jpg" alt="BitePath menu item selection with nutritional details">
+        </div>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-text">
+            <h3>Find and track every meal</h3>
+            <p>See your progress in real-time. Track calories consumed, budget spent, and protein hit across breakfast, lunch, and dinner. Context-aware nudges help you stay on track for your last meal of the day.</p>
+        </div>
+        <div class="feature-image">
+            <img src="images/planyourday.jpg" alt="BitePath daily progress tracking with meal cards">
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+    <h2>How BitePath works</h2>
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">1</div>
+            <h3>Set your goals</h3>
+            <p>Choose your daily calorie target and food budget. Set your home and work addresses so BitePath knows where to search.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <h3>Pick your meals</h3>
+            <p>For each meal, see nearby restaurants with items that fit your remaining calories and budget. Choose what works.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <h3>Stay on track</h3>
+            <p>Track your progress throughout the day. BitePath adjusts what's available based on what you've already eaten.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>Start finding the right calories</h2>
+    <p>Available now on iOS. Free to download.</p>
+    <div class="store-badges">
+        <a href="https://apps.apple.com/app/bitepath/id6761927959">
+            <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store" class="store-badge">
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <img src="images/logo.jpg" alt="BitePath" class="footer-logo">
+    <div class="footer-links">
+        <a href="https://istamenov-svg.github.io/bitepath/bitepath_privacy_policy.html">Privacy Policy</a>
+        <a href="https://istamenov-svg.github.io/bitepath/bitepath_terms.html">Terms & Conditions</a>
+        <a href="mailto:support@bitepath.app">Contact</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Marcon Groupe LLC. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
